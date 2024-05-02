@@ -1,10 +1,13 @@
 #include "person.h"
 
-Person::Person(int id, QString firstName, QString lastName, QDate dateOfBirth){
+#include <QJsonObject>
+
+Person::Person(int id, QString firstName, QString lastName, QDate dateOfBirth, QString password){
     m_id = id;
     m_firstName = firstName;
     m_lastName = lastName;
     m_dateOfBirth = dateOfBirth;
+    m_password = password;
 }
 
 int Person::id(){
@@ -56,3 +59,15 @@ void Person::setPassword(QString newPassword){
 bool Person::comparePasswords(QString password){
     return m_password == password;
 }
+
+QJsonObject Person::serialize(){
+    QJsonObject object;
+
+    //object["type"] = "PERSON";
+    object["firstName"] = m_firstName;
+    object["lastName"] = m_lastName;
+    object["dateOfBirth"] = m_dateOfBirth.toString();
+    object["password"] = m_password;
+
+    return object;
+};

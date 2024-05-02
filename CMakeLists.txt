@@ -26,6 +26,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         person.h person.cpp
         personmanager.h personmanager.cpp
         student.h student.cpp
+        teacher.h teacher.cpp
+        admin.h admin.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET fiokokKezeleseAdminisztrator APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

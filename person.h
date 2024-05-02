@@ -10,9 +10,10 @@
     Q_PROPERTY(QString m_firstName READ firstName WRITE setFirstName FINAL)
     Q_PROPERTY(QString m_lastName READ lastName WRITE setlastName FINAL)
     Q_PROPERTY(QDate m_dateOfBirth READ dateOfBirth WRITE setDateOfBirth FINAL)
+    Q_PROPERTY(QString m_password WRITE setPassword FINAL)
 public:
 
-    Person(int id, QString firstName, QString lastName, QDate dateOfBirth);
+    Person(int id, QString firstName, QString lastName, QDate dateOfBirth, QString password);
 
     int id();
     void setId(int newId);
@@ -28,6 +29,8 @@ public:
 
     void setPassword(QString new_password);
     bool comparePasswords(QString password);
+
+    virtual QJsonObject serialize();
 
 private:
     int m_id;
