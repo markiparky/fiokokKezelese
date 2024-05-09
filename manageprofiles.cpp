@@ -11,6 +11,7 @@
 #include <QListView>
 #include <QStandardItemModel>
 #include <QListWidget>
+#include <QPushButton>
 
 ManageProfiles::ManageProfiles(Person *person, PersonManager *personManager, QWidget *parent) : QWidget{parent}
 {
@@ -41,4 +42,38 @@ void ManageProfiles::displayAdmin(){
     }
 
     layout->addWidget(listWidget);
+
+    QHBoxLayout *horizontalLayout = new QHBoxLayout();
+
+    QPushButton *addButton = new QPushButton("Új");
+    horizontalLayout->addWidget(addButton);
+
+    QPushButton *removeButton = new QPushButton("Törlés");
+    removeButton->setEnabled(false);
+    horizontalLayout->addWidget(removeButton);
+
+
+    connect(listWidget, &QListWidget::itemSelectionChanged, this, [this, listWidget, removeButton](){
+        if(listWidget->selectedItems().size() > 0){
+            removeButton->setEnabled(true);
+        }else{
+            removeButton->setEnabled(false);
+        }
+    });
+
+    connect(removeButton, &QPushButton::clicked, this, [this, listWidget](){
+        // remove persons
+        PersonsListItem *selectedItem = dynamic_cast<PersonsListItem *>(listWidget->currentItem());
+        this->personManager->removePerson(selectedItem->person()->id());
+        personManager->saveData();
+
+        // reload persons
+        listWidget->clear();
+        foreach (Person *person, personManager->persons()) {
+            PersonsListItem *item = new PersonsListItem(person);
+            listWidget->addItem(item);
+        }
+    });
+
+    layout->addLayout(horizontalLayout);
 }

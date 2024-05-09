@@ -12,7 +12,7 @@ public:
     QList<Person *> persons();
 
     void addPerson(Person *person);
-   //void removePerson(int id);
+    void removePerson(int id);
 
     void saveData();
 

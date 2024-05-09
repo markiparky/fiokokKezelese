@@ -8,8 +8,9 @@ class PersonsListItem : public QListWidgetItem
 {
 public:
     PersonsListItem(Person *person);
+    Person* person();
 private:
-    Person *person;
+    Person *m_person;
 };
 
 #endif // PERSONSLISTITEM_H

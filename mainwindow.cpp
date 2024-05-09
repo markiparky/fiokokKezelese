@@ -28,9 +28,18 @@ MainWindow::MainWindow(QWidget *parent)
         personManager->saveData();
     }
 
+    // ---- Setting logged in user manually ----
+    foreach(Person *person, personManager->persons()){
+        if(Admin *admin = dynamic_cast<Admin *>(person)){
+            loggedInAs = admin;
+            break;
+        }
+    }
 
-    loggedInAs = personManager->persons().at(2);
-
+    if(loggedInAs == nullptr){
+        qDebug() << "Can't find admin user";
+    }
+    // ---- /Setting logged in user manually ----
 
     connect(ui->manageProfiles, &QAction::triggered, this, [this](){
         ManageProfiles *manageProfiles = new ManageProfiles(loggedInAs, personManager);

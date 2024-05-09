@@ -20,6 +20,6 @@ public:
 private:
     Ui::MainWindow *ui;
     PersonManager *personManager = new PersonManager();
-    Person *loggedInAs;
+    Person *loggedInAs = nullptr;
 };
 #endif // MAINWINDOW_H

@@ -21,12 +21,39 @@ QList<Person *> PersonManager::persons()
 
 void PersonManager::addPerson(Person *person)
 {
+    int currentMaxId = -1;
+
+    foreach (Person *p, m_persons) {
+        if(p->id() > currentMaxId){
+            currentMaxId = p->id();
+        }
+    }
+
+    person->setId(currentMaxId + 1);
     m_persons.append(person);
+}
+
+void PersonManager::removePerson(int id)
+{
+    int personIndex = -1;
+    for(int i = 0; i< m_persons.size(); i++){
+        Person *person = m_persons.at(i);
+        if(person->id() == id){
+            personIndex = i;
+            qDebug() << "found person";
+        }
+    }
+
+    if(personIndex == -1){
+        qDebug() << "person id not found!";
+        return;
+    }
+
+    m_persons.removeAt(personIndex);
 }
 
 void PersonManager::loadData()
 {
-
     QString dataPath = "data.json";
 
     if(!QFile::exists(dataPath)){

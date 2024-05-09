@@ -64,6 +64,7 @@ QJsonObject Person::serialize(){
     QJsonObject object;
 
     //object["type"] = "PERSON";
+    object["id"] = m_id;
     object["firstName"] = m_firstName;
     object["lastName"] = m_lastName;
     object["dateOfBirth"] = m_dateOfBirth.toString();

@@ -2,6 +2,11 @@
 
 PersonsListItem::PersonsListItem(Person *person)
 {
-    this->person = person;
-    this->setText(person->lastName() + " " + person->firstName());
+    m_person = person;
+    this->setText(m_person->lastName() + " " + m_person->firstName());
+}
+
+Person* PersonsListItem::person()
+{
+    return m_person;
 }
