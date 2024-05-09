@@ -14,7 +14,6 @@ public:
     void addPerson(Person *person);
    //void removePerson(int id);
 
-
     void saveData();
 
 private:

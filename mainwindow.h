@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "personmanager.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -17,5 +19,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    PersonManager *personManager = new PersonManager();
+    Person *loggedInAs;
 };
 #endif // MAINWINDOW_H

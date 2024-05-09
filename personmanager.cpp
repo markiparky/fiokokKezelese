@@ -31,13 +31,6 @@ void PersonManager::loadData()
 
     if(!QFile::exists(dataPath)){
         saveData();
-        //if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        //    qDebug() << "Nem sikerült létrehozni a fájlt!";
-        //}
-
-        //file.write("{\"persons\": []}");
-
-        //file.close();
     }
 
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
