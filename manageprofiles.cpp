@@ -1,5 +1,6 @@
 #include "admin.h"
 #include "manageprofiles.h"
+#include "newpersoncreation.h"
 #include "personmanager.h"
 #include "personslistitem.h"
 #include "student.h"
@@ -73,6 +74,12 @@ void ManageProfiles::displayAdmin(){
             PersonsListItem *item = new PersonsListItem(person);
             listWidget->addItem(item);
         }
+    });
+
+    connect(addButton, &QPushButton::clicked, this, [this](){
+        NewPersonCreation *newPersonCreation = new NewPersonCreation(this->personManager);
+        newPersonCreation->show();
+
     });
 
     layout->addLayout(horizontalLayout);

@@ -30,6 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         admin.h admin.cpp
         manageprofiles.h manageprofiles.cpp
         personslistitem.h personslistitem.cpp
+        newpersoncreation.h newpersoncreation.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET fiokokKezeleseAdminisztrator APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
