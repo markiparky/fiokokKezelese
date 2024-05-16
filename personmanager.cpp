@@ -52,6 +52,25 @@ void PersonManager::removePerson(int id)
     m_persons.removeAt(personIndex);
 }
 
+void PersonManager::modifyPerson(Person *person)
+{
+    int index = -1;
+    for (int i = 0; i<m_persons.size(); i++) {
+        if(m_persons.at(i)->id() == person->id()){
+            index = 1;
+            break;
+        }
+    }
+
+    if(index == -1){
+        qDebug() << "Nem található felhasználó";
+        return;
+    }
+
+    m_persons.removeAt(index);
+    m_persons.append(person);
+}
+
 void PersonManager::loadData()
 {
     QString dataPath = "data.json";

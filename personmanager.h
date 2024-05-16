@@ -13,7 +13,7 @@ public:
 
     void addPerson(Person *person);
     void removePerson(int id);
-
+    void modifyPerson(Person *person);
     void saveData();
 
 private:

@@ -1,5 +1,6 @@
 #include "admin.h"
 #include "manageprofiles.h"
+#include "modifyperson.h"
 #include "newpersoncreation.h"
 #include "personmanager.h"
 #include "personslistitem.h"
@@ -49,16 +50,21 @@ void ManageProfiles::displayAdmin(){
     QPushButton *addButton = new QPushButton("Új");
     horizontalLayout->addWidget(addButton);
 
+    QPushButton *modifyButton = new QPushButton("Módosítás");
+    modifyButton->setEnabled(false);
+    horizontalLayout->addWidget(modifyButton);
+
     QPushButton *removeButton = new QPushButton("Törlés");
     removeButton->setEnabled(false);
     horizontalLayout->addWidget(removeButton);
 
-
-    connect(listWidget, &QListWidget::itemSelectionChanged, this, [this, listWidget, removeButton](){
+    connect(listWidget, &QListWidget::itemSelectionChanged, this, [this, listWidget, removeButton, modifyButton](){
         if(listWidget->selectedItems().size() > 0){
             removeButton->setEnabled(true);
+            modifyButton->setEnabled(true);
         }else{
             removeButton->setEnabled(false);
+            modifyButton->setEnabled(false);
         }
     });
 
@@ -79,8 +85,14 @@ void ManageProfiles::displayAdmin(){
     connect(addButton, &QPushButton::clicked, this, [this](){
         NewPersonCreation *newPersonCreation = new NewPersonCreation(this->personManager);
         newPersonCreation->show();
+    });
 
+    connect(modifyButton, &QPushButton::clicked, this, [this, listWidget](){
+        PersonsListItem *selectedItem = dynamic_cast<PersonsListItem *>(listWidget->currentItem());
+        ModifyPerson *modifyPerson =  new ModifyPerson(this->personManager, selectedItem->person());
+        modifyPerson->show();
     });
 
     layout->addLayout(horizontalLayout);
+
 }
