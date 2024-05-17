@@ -2,9 +2,7 @@
 #include "personmanager.h"
 #include "student.h"
 #include "teacher.h"
-//#include "admin.h"
 #include "person.h"
-//#include "manageprofiles.h"
 #include "newpersoncreation.h"
 
 #include <QLabel>
