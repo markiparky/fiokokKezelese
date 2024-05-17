@@ -18,6 +18,7 @@
 ManageProfiles::ManageProfiles(Person *person, PersonManager *personManager, QWidget *parent) : QWidget{parent}
 {
     this->personManager = personManager;
+    this->setWindowTitle("Fiókok kezelése");
     this->setLayout(layout);
 
     if(auto derived = dynamic_cast<Student *>(person)){
@@ -36,13 +37,7 @@ void ManageProfiles::displayAdmin(){
     QLabel *label = new QLabel("Fiókok szerkesztése");
     layout->addWidget(label);
 
-    QListWidget *listWidget = new QListWidget();
-
-    foreach (Person *person, personManager->persons()) {
-        PersonsListItem *item = new PersonsListItem(person);
-        listWidget->addItem(item);
-    }
-
+    updatePersonList();
     layout->addWidget(listWidget);
 
     QHBoxLayout *horizontalLayout = new QHBoxLayout();
@@ -58,7 +53,7 @@ void ManageProfiles::displayAdmin(){
     removeButton->setEnabled(false);
     horizontalLayout->addWidget(removeButton);
 
-    connect(listWidget, &QListWidget::itemSelectionChanged, this, [this, listWidget, removeButton, modifyButton](){
+    connect(listWidget, &QListWidget::itemSelectionChanged, this, [this, removeButton, modifyButton](){
         if(listWidget->selectedItems().size() > 0){
             removeButton->setEnabled(true);
             modifyButton->setEnabled(true);
@@ -68,31 +63,40 @@ void ManageProfiles::displayAdmin(){
         }
     });
 
-    connect(removeButton, &QPushButton::clicked, this, [this, listWidget](){
+    connect(removeButton, &QPushButton::clicked, this, [this](){
         // remove persons
         PersonsListItem *selectedItem = dynamic_cast<PersonsListItem *>(listWidget->currentItem());
         this->personManager->removePerson(selectedItem->person()->id());
         personManager->saveData();
 
         // reload persons
-        listWidget->clear();
-        foreach (Person *person, personManager->persons()) {
-            PersonsListItem *item = new PersonsListItem(person);
-            listWidget->addItem(item);
-        }
+        updatePersonList();
     });
 
     connect(addButton, &QPushButton::clicked, this, [this](){
         NewPersonCreation *newPersonCreation = new NewPersonCreation(this->personManager);
+
+        connect(newPersonCreation, &NewPersonCreation::newPersonAdded, this, [this]{
+            updatePersonList();
+        });
+
         newPersonCreation->show();
     });
 
-    connect(modifyButton, &QPushButton::clicked, this, [this, listWidget](){
+    connect(modifyButton, &QPushButton::clicked, this, [this](){
         PersonsListItem *selectedItem = dynamic_cast<PersonsListItem *>(listWidget->currentItem());
         ModifyPerson *modifyPerson =  new ModifyPerson(this->personManager, selectedItem->person());
         modifyPerson->show();
     });
 
     layout->addLayout(horizontalLayout);
+}
 
+void ManageProfiles::updatePersonList(){
+    // reload persons
+    listWidget->clear();
+    foreach (Person *person, personManager->persons()) {
+        PersonsListItem *item = new PersonsListItem(person);
+        listWidget->addItem(item);
+    }
 }

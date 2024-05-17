@@ -1,8 +1,22 @@
 #ifndef NEWPERSONCREATION_H
 #define NEWPERSONCREATION_H
 
-#include "personmanager.h"
 #include <QWidget>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QDebug>
+#include <QListView>
+#include <QStandardItemModel>
+#include <QListWidget>
+#include <QPushButton>
+#include <QRadioButton>
+#include "QFile"
+
+#include "personmanager.h"
 
 class NewPersonCreation : public QWidget
 {
@@ -12,8 +26,10 @@ public:
 
 private:
     PersonManager *personManager;
-signals:
+    QVBoxLayout *verticalLayout = new QVBoxLayout();
 
+signals:
+    void newPersonAdded();
 };
 
 #endif // NEWPERSONCREATION_H
