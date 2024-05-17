@@ -15,6 +15,7 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QMessageBox>
 #include "QFile"
 #include <QCalendarWidget>
 
@@ -70,11 +71,25 @@ NewPersonCreation::NewPersonCreation(PersonManager *personManager, QWidget *pare
         QString FirstNameString = FirstName->text();
         QString LastNameString = LastName->text();
         QString PasswordString = Password->text();
-        int GradeClassInt = GradeClass->text().toInt();
-        int HeadTeacherInt = HeadTeacher->text().toInt();
         QDate DateOfBirthString = DateOfBirth->selectedDate();
 
+        int GradeClassInt = GradeClass->text().toInt();
+        int HeadTeacherInt = HeadTeacher->text().toInt();
+
+        if(FirstNameString.isEmpty() || LastNameString.isEmpty() || PasswordString.isEmpty() || DateOfBirthString.isNull()){
+            QMessageBox *errorMessage = new QMessageBox(QMessageBox::Critical, "Hiba!", "Az űrlap hiányzó mezőket tartalmaz.");
+            errorMessage->show();
+            return;
+        }
+
         if(SelectStudent->isChecked()){
+
+            if(GradeClassInt == 0){
+                QMessageBox *errorMessage = new QMessageBox(QMessageBox::Critical, "Hiba!", "Az űrlap hiányzó mezőket tartalmaz.");
+                errorMessage->show();
+                return;
+            }
+
             Student *newstudent = new Student(
                 6,
                 FirstNameString,
@@ -83,13 +98,14 @@ NewPersonCreation::NewPersonCreation(PersonManager *personManager, QWidget *pare
                 PasswordString,
                 GradeClassInt
             );
-
             this->personManager->addPerson(newstudent);
-            this->personManager->saveData();
-            emit newPersonAdded();
-            this->close();
 
         }else if(SelectTeacher->isChecked()){
+            if(HeadTeacherInt == 0){
+                QMessageBox *errorMessage = new QMessageBox(QMessageBox::Critical, "Hiba!", "Az űrlap hiányzó mezőket tartalmaz.");
+                errorMessage->show();
+                return;
+            }
             Teacher *newteacher = new Teacher(
                 7,
                 FirstNameString,
@@ -100,10 +116,10 @@ NewPersonCreation::NewPersonCreation(PersonManager *personManager, QWidget *pare
             );
 
             this->personManager->addPerson(newteacher);
-            this->personManager->saveData();
-            emit newPersonAdded();
-            this->close();
         }
+        this->personManager->saveData();
+        emit newPersonAdded();
+        this->close();
 
     });
 
