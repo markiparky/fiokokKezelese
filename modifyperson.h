@@ -1,6 +1,9 @@
 #ifndef MODIFYPERSON_H
 #define MODIFYPERSON_H
 
+#include <QVBoxLayout>
+#include <QLineEdit>
+
 #include "personmanager.h"
 
 #include <QWidget>
@@ -13,9 +16,11 @@ public:
 
 private:
     PersonManager *personManager;
+    Person *person;
+    QVBoxLayout *verticalLayout = new QVBoxLayout();
 
 signals:
-
+    void personModified();
 };
 
 #endif // MODIFYPERSON_H

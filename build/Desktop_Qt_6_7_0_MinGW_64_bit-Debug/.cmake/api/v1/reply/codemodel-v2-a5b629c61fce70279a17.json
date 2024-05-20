@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-c0b3ae72069aeda44641.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "fiokokKezeleseAdminisztrator",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "fiokokKezeleseAdminisztrator::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fiokokKezeleseAdminisztrator-Debug-93a88196fddb63c2d55c.json",
+					"name" : "fiokokKezeleseAdminisztrator",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "fiokokKezeleseAdminisztrator_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fiokokKezeleseAdminisztrator_autogen-Debug-11461cc3dc2fc456eab1.json",
+					"name" : "fiokokKezeleseAdminisztrator_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "fiokokKezeleseAdminisztrator_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fiokokKezeleseAdminisztrator_autogen_timestamp_deps-Debug-cfc4419c61b927661fac.json",
+					"name" : "fiokokKezeleseAdminisztrator_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/qtprojects/fiokokKezelese/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug",
+		"source" : "C:/qtprojects/fiokokKezelese"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

@@ -112,7 +112,6 @@ NewPersonCreation::NewPersonCreation(PersonManager *personManager, QWidget *pare
                 PasswordString,
                 HeadTeacherInt
             );
-
             this->personManager->addPerson(newteacher);
         }
         this->personManager->saveData();

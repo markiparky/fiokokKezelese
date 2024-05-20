@@ -2,11 +2,9 @@
 
 #include <QJsonObject>
 
-Admin::Admin(int id, QString firstName, QString lastName, QDate dateOfBirth, QString password) :
-    Person(id, firstName, lastName, dateOfBirth, password)
-{
-
-}
+Admin::Admin(int id, QString firstName, QString lastName, QDate dateOfBirth, QString password)
+    : Person(id, firstName, lastName, dateOfBirth, password)
+{}
 
 QJsonObject Admin::serialize()
 {
@@ -15,5 +13,4 @@ QJsonObject Admin::serialize()
     object["type"] = "ADMIN";
 
     return object;
-
 }

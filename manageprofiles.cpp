@@ -86,6 +86,11 @@ void ManageProfiles::displayAdmin(){
     connect(modifyButton, &QPushButton::clicked, this, [this](){
         PersonsListItem *selectedItem = dynamic_cast<PersonsListItem *>(listWidget->currentItem());
         ModifyPerson *modifyPerson =  new ModifyPerson(this->personManager, selectedItem->person());
+
+        connect(modifyPerson, &ModifyPerson::personModified, this, [this]{
+            updatePersonList();
+        });
+
         modifyPerson->show();
     });
 

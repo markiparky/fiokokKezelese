@@ -50,6 +50,10 @@ void Person::setDateOfBirth(QDate newDateOfBirth){
     }
 };
 
+QString Person::password(){
+    return m_password;
+}
+
 void Person::setPassword(QString newPassword){
     if(m_password != newPassword){
         m_password = newPassword;

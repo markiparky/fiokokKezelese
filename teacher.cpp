@@ -5,7 +5,7 @@
 Teacher::Teacher(int id, QString firstName, QString lastName, QDate dateOfBirth, QString password, int osztalyOsztalyfonoke) :
     Person(id, firstName, lastName, dateOfBirth, password)
 {
-
+    m_osztalyOsztalyfonoke = osztalyOsztalyfonoke;
 }
 
 

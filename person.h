@@ -27,6 +27,7 @@ public:
     QDate dateOfBirth();
     void setDateOfBirth(QDate newDateOfBirth);
 
+    QString password();
     void setPassword(QString new_password);
     bool comparePasswords(QString password);
 
