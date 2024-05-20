@@ -8,6 +8,8 @@
 
 #include <QDebug>
 #include <QDate>
+#include <QComboBox>
+#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,24 +30,43 @@ MainWindow::MainWindow(QWidget *parent)
         personManager->saveData();
     }
 
-    // ---- Setting logged in user manually ----
-    foreach(Person *person, personManager->persons()){
-        if(Admin *admin = dynamic_cast<Admin *>(person)){
-            loggedInAs = admin;
-            break;
-        }
-    }
-
-    if(loggedInAs == nullptr){
-        qDebug() << "Can't find admin user";
-    }
-    // ---- /Setting logged in user manually ----
-
     connect(ui->manageProfiles, &QAction::triggered, this, [this](){
         ManageProfiles *manageProfiles = new ManageProfiles(loggedInAs, personManager);
         manageProfiles->show();
     });
 
+    // --- user selector for development only ---
+    if(personManager->persons().size() > 0){
+        loggedInAs = personManager->persons().first();
+    }else{
+        qDebug() << "No user in the database, can't set logged in user automatically.";
+    }
+
+    foreach (Person *person, personManager->persons()) {
+        this->ui->usersComboBox->addItem(person->lastName() + " " + person->firstName(), person->id());
+    }
+
+    connect(this->ui->usersComboBox, &QComboBox::currentIndexChanged, this, [this]{
+        this->loggedInAs = nullptr;
+        foreach(Person *person, this->personManager->persons()){
+            if(person->id() == this->ui->usersComboBox->currentData().toInt()){
+                this->loggedInAs = person;
+                break;
+            }
+        }
+
+        if(this->loggedInAs == nullptr){
+            qDebug() << "Can't find user";
+        }
+    });
+
+
+    connect(this->ui->refreshButton, &QPushButton::clicked, this, [this]{
+        this->ui->usersComboBox->clear();
+        foreach (Person *person, this->personManager->persons()) {
+            this->ui->usersComboBox->addItem(person->lastName() + " " + person->firstName(), person->id());
+        }
+    });
 
 }
 

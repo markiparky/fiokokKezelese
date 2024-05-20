@@ -6,6 +6,7 @@
 #include "personslistitem.h"
 #include "student.h"
 #include "teacher.h"
+#include "viewstudent.h"
 
 #include <QLabel>
 #include <QVBoxLayout>
@@ -18,13 +19,13 @@
 ManageProfiles::ManageProfiles(Person *person, PersonManager *personManager, QWidget *parent) : QWidget{parent}
 {
     this->personManager = personManager;
-    this->setWindowTitle("Fiókok kezelése");
     this->setLayout(layout);
 
     if(auto derived = dynamic_cast<Student *>(person)){
         qDebug() << "Student";
-    }else if(auto derived = dynamic_cast<Teacher *>(person)){
+    }else if(Teacher *derived = dynamic_cast<Teacher *>(person)){
         qDebug() << "Teacher";
+        displayTeacher(derived);
     }else if(auto derived = dynamic_cast<Admin *>(person)){
         displayAdmin();
     }else{
@@ -33,7 +34,7 @@ ManageProfiles::ManageProfiles(Person *person, PersonManager *personManager, QWi
 }
 
 void ManageProfiles::displayAdmin(){
-
+    this->setWindowTitle("Fiókok kezelése");
     QLabel *label = new QLabel("Fiókok szerkesztése");
     layout->addWidget(label);
 
@@ -104,4 +105,44 @@ void ManageProfiles::updatePersonList(){
         PersonsListItem *item = new PersonsListItem(person);
         listWidget->addItem(item);
     }
+}
+
+void ManageProfiles::displayTeacher(Teacher *loggedInTeacher){
+    this->setWindowTitle("Osztály tagjai");
+
+    QLabel *label = new QLabel("Osztály tagjai:");
+    layout->addWidget(label);
+
+    foreach (Person *person, personManager->persons()) {
+        if(Student *derived = dynamic_cast<Student *>(person)){
+            if(derived->evfolyam() == loggedInTeacher->osztalyOsztalyfonoke()){
+                PersonsListItem *item = new PersonsListItem(person);
+                listWidget->addItem(item);
+            }
+        }
+    }
+
+    layout->addWidget(listWidget);
+
+    QHBoxLayout *horizontalLayout = new QHBoxLayout();
+
+    QPushButton *viewButton = new QPushButton("Részletek");
+    viewButton->setEnabled(false);
+    horizontalLayout->addWidget(viewButton);
+
+    connect(viewButton, &QPushButton::clicked, this, [this](){
+        PersonsListItem *selectedItem = dynamic_cast<PersonsListItem *>(listWidget->currentItem());
+        ViewStudent *viewStudent = new ViewStudent(dynamic_cast<Student *>(selectedItem->person()));
+        viewStudent->show();
+    });
+
+    connect(listWidget, &QListWidget::itemSelectionChanged, this, [this, viewButton](){
+        if(listWidget->selectedItems().size() > 0){
+            viewButton->setEnabled(true);
+        }else{
+            viewButton->setEnabled(false);
+        }
+    });
+
+    layout->addLayout(horizontalLayout);
 }
