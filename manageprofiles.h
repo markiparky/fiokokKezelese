@@ -3,6 +3,7 @@
 
 #include "person.h"
 #include "personmanager.h"
+#include "student.h"
 #include "teacher.h"
 #include <QListWidget>
 #include <QVBoxLayout>
@@ -17,13 +18,12 @@ public:
 private:
     void displayAdmin();
     void displayTeacher(Teacher *loggedInTeacher);
+    void displayStudent(Student *student);
 
     void updatePersonList();
     PersonManager *personManager;
     QVBoxLayout *layout = new QVBoxLayout();
     QListWidget *listWidget = new QListWidget();
-
-
 };
 
 #endif // MANAGEPROFILES_H

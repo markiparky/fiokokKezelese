@@ -15,6 +15,7 @@
 #include <QStandardItemModel>
 #include <QListWidget>
 #include <QPushButton>
+#include <QCalendarWidget>
 
 ManageProfiles::ManageProfiles(Person *person, PersonManager *personManager, QWidget *parent) : QWidget{parent}
 {
@@ -22,9 +23,8 @@ ManageProfiles::ManageProfiles(Person *person, PersonManager *personManager, QWi
     this->setLayout(layout);
 
     if(auto derived = dynamic_cast<Student *>(person)){
-        qDebug() << "Student";
+        displayStudent(derived);
     }else if(Teacher *derived = dynamic_cast<Teacher *>(person)){
-        qDebug() << "Teacher";
         displayTeacher(derived);
     }else if(auto derived = dynamic_cast<Admin *>(person)){
         displayAdmin();
@@ -146,3 +146,59 @@ void ManageProfiles::displayTeacher(Teacher *loggedInTeacher){
 
     layout->addLayout(horizontalLayout);
 }
+
+void ManageProfiles::displayStudent(Student *student)
+{
+    this->setWindowTitle("Fiókod adatai");
+
+    QLabel *label = new QLabel("Fiókod adatai:");
+    layout->addWidget(label);
+
+    QLabel *firstNameLabel = new QLabel("Keresztnév: ");
+    layout->addWidget(firstNameLabel);
+    QLineEdit *firstName = new QLineEdit();
+    firstName->setEnabled(false);
+    layout->addWidget(firstName);
+
+    QLabel *lastNameLabel = new QLabel("Vezetéknév: ");
+    layout->addWidget(lastNameLabel);
+    QLineEdit* lastName = new QLineEdit();
+    lastName->setEnabled(false);
+    layout->addWidget(lastName);
+
+    QLabel *dateOfBirthLabel = new QLabel("Születési dátum: ");
+    layout->addWidget(dateOfBirthLabel);
+    QCalendarWidget *dateOfBirth = new QCalendarWidget();
+    dateOfBirth->setEnabled(false);
+    layout->addWidget(dateOfBirth);
+
+    QLabel *passwordLabel = new QLabel("Jelszó: ");
+    layout->addWidget(passwordLabel);
+    QLineEdit *password = new QLineEdit();
+    password->setEchoMode(QLineEdit::Password);
+    layout->addWidget(password);
+
+    QLabel *gradeClassLabel = new QLabel("Osztály: ");
+    layout->addWidget(gradeClassLabel);
+    QLineEdit *gradeClass = new QLineEdit();
+    gradeClass->setEnabled(false);
+    layout->addWidget(gradeClass);
+
+    firstName->setText(student->firstName());
+    lastName->setText(student->lastName());
+    dateOfBirth->setSelectedDate(student->dateOfBirth());
+    gradeClass->setText(QString::number(student->evfolyam()));
+    password->setText(student->password());
+
+    QPushButton *saveButton = new QPushButton("Mentés");
+    connect(saveButton, &QPushButton::clicked, this, [this, student, password]{
+        if(password->text().isEmpty()) return;
+
+        student->setPassword(password->text());
+        personManager->modifyPerson(student);
+        this->close();
+    });
+    layout->addWidget(saveButton);
+
+}
+

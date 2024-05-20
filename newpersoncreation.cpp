@@ -57,6 +57,7 @@ NewPersonCreation::NewPersonCreation(PersonManager *personManager, QWidget *pare
     QLabel* PasswordLabel = new QLabel("Jelszó: ");
     formLayout->addWidget(PasswordLabel);
     QLineEdit* Password = new QLineEdit();
+    Password->setEchoMode(QLineEdit::Password);
     formLayout->addWidget(Password);
 
     QLabel* GradeClassLabel = new QLabel("Osztály: ");

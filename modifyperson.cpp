@@ -53,6 +53,7 @@ ModifyPerson::ModifyPerson(PersonManager *personManager, Person *person, QWidget
     QLabel* PasswordLabel = new QLabel("Jelszó: ");
     formLayout->addWidget(PasswordLabel);
     QLineEdit* Password = new QLineEdit();
+    Password->setEchoMode(QLineEdit::Password);
     formLayout->addWidget(Password);
 
     QLabel* GradeClassLabel = new QLabel("Osztály: ");
